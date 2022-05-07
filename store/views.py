@@ -36,7 +36,7 @@ def checkout(request):
         items = order.orderitem_set.all()
     else:
         items = []
-        order = {"get_total": 0, "get_cart_items": 0}
+        order = {"get_total": 0, "get_cart_items": 0, "shipping": False}
     context = {"items": items, "order": order}
     return render(request, "store/Checkout.html", context=context)
 

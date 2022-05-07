@@ -13,24 +13,25 @@
                             <input required class="form-control" type="email" name="email" placeholder="Email..">
                         </div>
                     </div>
-
-                    <div id="shipping-info">
-                        <hr>
-                        <p>Shipping Information:</p>
-                        <hr>
-                        <div class="form-field">
-                            <input class="form-control" type="text" name="address" placeholder="Address..">
+                    {% if order.shipping %}
+                        <div id="shipping-info">
+                            <hr>
+                            <p>Shipping Information:</p>
+                            <hr>
+                            <div class="form-field">
+                                <input class="form-control" type="text" name="address" placeholder="Address..">
+                            </div>
+                            <div class="form-field">
+                                <input class="form-control" type="text" name="city" placeholder="City..">
+                            </div>
+                            <div class="form-field">
+                                <input class="form-control" type="text" name="state" placeholder="State..">
+                            </div>
+                            <div class="form-field">
+                                <input class="form-control" type="text" name="zipcode" placeholder="Zip code..">
+                            </div>
                         </div>
-                        <div class="form-field">
-                            <input class="form-control" type="text" name="city" placeholder="City..">
-                        </div>
-                        <div class="form-field">
-                            <input class="form-control" type="text" name="state" placeholder="State..">
-                        </div>
-                        <div class="form-field">
-                            <input class="form-control" type="text" name="zipcode" placeholder="Zip code..">
-                        </div>
-                    </div>
+                    {% endif %}
                     <hr>
                     <input id="form-button" class="btn btn-success btn-block" type="submit" value="Continue">
                 </form>
