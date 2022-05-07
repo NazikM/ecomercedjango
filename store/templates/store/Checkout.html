@@ -86,6 +86,49 @@
 
         function submitFormData(){
             console.log("Payment btn")
+
+            let userFormData = {
+                'name': null,
+                'email': null,
+                'total': {{ order.get_total }},
+            }
+
+            let shippingInfo = {
+                'address': null,
+                'city': null,
+                'state': null,
+                'zipcode': null,
+            }
+
+            if (shipping !== "False"){
+                shippingInfo.address = form.address.value;
+                shippingInfo.city = form.city.value;
+                shippingInfo.state = form.state.value;
+                shippingInfo.zipcode = form.zipcode.value;
+            }
+
+            if (user === "AnonymousUser"){
+                userFormData.name = form.name.value;
+                userFormData.email = form.email.value;
+            }
+
+            console.log("User is logged in, sending data");
+
+            let url = "/process_order/";
+            fetch(url,{
+                method: "POST",
+                headers: {
+                    'Content-type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+                },
+                body: JSON.stringify({"form": userFormData, "shipping": shippingInfo})
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                console.log("Success: ", data);
+                alert("Transaction completed")
+                window.location.href = "{% url 'store' %}";
+            })
         }
     </script>
 {% endblock content %}

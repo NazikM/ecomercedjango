@@ -8,7 +8,7 @@ for(let i = 0; i < updateBtns.length; i++){
 
         console.log(`User:${user}`);
         if(user==="AnonymousUser"){
-            console.log("Not logged in");
+            addCookieItem(productId, action);
         }else{
             updateUserOrder(productId, action);
         }
@@ -18,7 +18,7 @@ for(let i = 0; i < updateBtns.length; i++){
 function updateUserOrder(productId, action){
     console.log("User is logged in, sending data");
 
-    let url = "update_item/";
+    let url = "/update_item/";
     fetch(url,{
         method: "POST",
         headers: {
@@ -32,4 +32,24 @@ function updateUserOrder(productId, action){
         console.log(data);
         location.reload();
     })
+}
+
+function addCookieItem(productId, action){
+    if(action === "add"){
+        if(cart[productId] !== undefined){
+            cart[productId]["quantity"] += 1;
+        }else{
+            cart[productId] = {"quantity": 1};
+        }
+    }
+
+    else if(action === "remove"){
+        cart[productId]["quantity"] -= 1;
+
+        if (cart[productId]["quantity"] <= 0){
+            delete cart[productId];
+        }
+    }
+    document.cookie = `cart=${JSON.stringify(cart)};domain=;path=/`;
+    location.reload();
 }
