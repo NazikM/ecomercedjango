@@ -7,8 +7,13 @@ from store.models import *
 
 
 def store(request):
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    else:
+        order = {"get_cart_items": 0}
     products = Product.objects.all()
-    context = {"products": products}
+    context = {"products": products, "order": order}
     return render(request, "store/Store.html", context=context)
 
 
